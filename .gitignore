@@ -1,0 +1,3 @@
+echo '*' > .gitignore          # 忽略所有文件
+echo '!*.ml' >> .gitignore     # 但保留 .ml 文件
+echo '!.gitignore' >> .gitignore  # 保留 .gitignore 自身
