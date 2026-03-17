@@ -6,7 +6,7 @@
 
   These tests are worth 30 points.
 *)
-
+open Lab5
 (* MAKE STREAM. Return a new stream. THIS is the first element of the stream.
    STATE is an object that stores the stream's state somehow. The function NEXT
    takes THIS and STATE as arguments. It returns a 2-tuple with a new THIS and
