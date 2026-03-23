@@ -6,11 +6,25 @@
 *)
 
 open Lazy ;;
+type 'a lazyList =
+  | LazyEmpty
+  | LazyNode of 'a Lazy.t * ('a lazyList) Lazy.t
 
-(*
-   Your code for LAZY LIST, LAZY LIST ERROR, LAZY CONS, LAZY HEAD, LAZY TAIL,
-   and LAZY TAKE goes here!
-*)
+exception LazyListError of string
+
+let lazyCons h t = LazyNode (h, t);;
+
+let lazyHead l =
+  match l with
+  | LazyEmpty -> raise (LazyListError "Empty List")
+  | LazyNode (h, _) -> force h ;;
+
+let lazyTail l =
+  match l with
+  | LazyEmpty -> raise (LazyListError "Empty List")
+  | LazyNode (_, t) -> force t ;;
+
+
 
 (* LAZY INTS. Return a lazy list of integers, from FIRST to LAST, inclusive.
    Print an annoying message each time a new integer is computed. *)
@@ -69,7 +83,7 @@ lazyHead (lazyTail (lazyTail strings)) ;;
 try
   lazyHead (lazyTail (lazyTail (lazyTail strings)))
 with
-  LazyListError ->
+  LazyListError _ ->
     Printf.printf "Oops.\n" ;
     "" ;;
 
