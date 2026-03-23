@@ -190,6 +190,22 @@ let bstInsert key tree =
       if key < k
       then BstNode(k, bstInserting l, r)
       else if key > k
-      then BstNode(k, bstInserting r, l)
+      then BstNode(k, l, bstInserting r)
       else tree
   in bstInserting tree;;
+
+(*cont: create a space on the heap instead of stack*)
+let bstInsert key tree =
+  let rec bstInserting tree cont =
+    match tree with
+    | BstEmpty -> cont (BstNode(key, BstEmpty, BstEmpty))
+    
+    | BstNode(k, l, r) ->
+      if key < k then
+        bstInserting l (fun new_l -> cont (BstNode(k, new_l, r)))
+      else if key > k then
+        bstInserting r (fun new_r -> cont (BstNode(k, l, new_r)))
+      else 
+        cont tree
+
+  in bstInserting tree (fun res -> res);;
